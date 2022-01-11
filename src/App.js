@@ -1,25 +1,33 @@
-import logo from './logo.svg';
+import React from "react";
+import Routes from "./config/routes";
 import './App.css';
 
+
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+  const inactivityTime = () => {
+    let time;
+    window.onload = resetTimer;
+    document.onmousemove = resetTimer;
+    document.onkeyup = resetTimer;
+
+    function resetTimer() {
+      clearTimeout(time);
+      time = setTimeout(()=>localStorage.removeItem("_mt_"), 36000000);
+      // 1000 milliseconds = 1 second
+    }
+  };
+
+  window.onload = function () {
+    if(localStorage.getItem("r_me") === false){
+      inactivityTime();
+    }
+  };
+return (
+  <div className="">
+    <Routes/>
+  </div>
+);
 }
 
 export default App;
